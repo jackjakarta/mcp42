@@ -15,6 +15,7 @@ export function createApp() {
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
     await server.connect(transport);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const body = ctx.req.header('content-type')?.includes('application/json')
       ? await ctx.req.json().catch(() => undefined)
       : undefined;

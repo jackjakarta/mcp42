@@ -11,6 +11,7 @@
     "dev": "tsx watch src/index.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint": "eslint .",
     "start": "tsx src/index.ts",
     "start:prod": "node dist/index.js",
     "test": "vitest run",
