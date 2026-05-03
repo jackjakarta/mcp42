@@ -1,4 +1,4 @@
-import type { HttpBindings } from '@hono/node-server';
+import { type HttpBindings } from '@hono/node-server';
 import { RESPONSE_ALREADY_SENT } from '@hono/node-server/utils/response';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { Hono } from 'hono';

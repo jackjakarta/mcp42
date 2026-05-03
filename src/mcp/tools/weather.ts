@@ -10,14 +10,16 @@ const inputSchema = z.object({
     .describe('Temperature unit system (defaults to metric)'),
 });
 
+const conditionsSchema = z.enum(['sunny', 'cloudy', 'rainy', 'snowy']);
+
 const outputSchema = z.object({
   city: z.string(),
   units: z.enum(['metric', 'imperial']),
   temperature: z.number(),
-  condition: z.enum(['sunny', 'cloudy', 'rainy', 'snowy']),
+  condition: conditionsSchema,
 });
 
-const CONDITIONS = ['sunny', 'cloudy', 'rainy', 'snowy'] as const;
+const CONDITIONS = conditionsSchema.options;
 
 function mockWeather(city: string, units: 'metric' | 'imperial') {
   const seed = [...city.toLowerCase()].reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
