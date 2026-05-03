@@ -8,23 +8,23 @@ import { createMcpServer } from './mcp/server.js';
 export function createApp() {
   const app = new Hono<{ Bindings: HttpBindings }>();
 
-  app.get('/health', (c) => c.json({ ok: true }));
+  app.get('/health', (ctx) => ctx.json({ ok: true }));
 
-  app.all('/mcp', async (c) => {
+  app.all('/mcp', async (ctx) => {
     const server = createMcpServer();
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
     await server.connect(transport);
 
-    const body = c.req.header('content-type')?.includes('application/json')
-      ? await c.req.json().catch(() => undefined)
+    const body = ctx.req.header('content-type')?.includes('application/json')
+      ? await ctx.req.json().catch(() => undefined)
       : undefined;
 
-    c.env.outgoing.on('close', () => {
+    ctx.env.outgoing.on('close', () => {
       void transport.close();
       void server.close();
     });
 
-    await transport.handleRequest(c.env.incoming, c.env.outgoing, body);
+    await transport.handleRequest(ctx.env.incoming, ctx.env.outgoing, body);
     return RESPONSE_ALREADY_SENT;
   });
 

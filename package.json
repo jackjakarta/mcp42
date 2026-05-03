@@ -16,6 +16,7 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
+    "@better-fetch/fetch": "1.1.21",
     "@hono/node-server": "2.0.0",
     "@modelcontextprotocol/sdk": "1.29.0",
     "hono": "4.12.14",
