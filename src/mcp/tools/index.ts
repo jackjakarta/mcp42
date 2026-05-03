@@ -1,7 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 
-import { registerWeatherTool } from './weather.js';
+import { registerJokeTool } from './joke/index.js';
 
 export function registerAllTools(server: McpServer): void {
-  registerWeatherTool(server);
+  registerJokeTool(server);
 }

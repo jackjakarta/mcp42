@@ -1,0 +1,39 @@
+name: Static Checks
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+  workflow_dispatch:
+
+jobs:
+  checks:
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install PNPM
+        run: npm install -g pnpm@9.15.3
+
+      - name: Install dependencies
+        run: pnpm install
+      - name: Check formatting
+        run: pnpm format:check
+      - name: Check linter
+        run: pnpm lint
+      - name: Check types
+        run: pnpm types
+      - name: Run tests
+        run: pnpm test
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=critical
