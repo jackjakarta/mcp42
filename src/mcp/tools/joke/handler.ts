@@ -1,7 +1,7 @@
 import { betterFetch } from '@better-fetch/fetch';
 import { z } from 'zod';
 
-import { type JokeCategory } from './schemas';
+import { type JokeCategory } from './schemas.js';
 
 export async function getJokeHandler(category: JokeCategory) {
   const url = `https://api.chucknorris.io/jokes/random?category=${encodeURI(category)}`;

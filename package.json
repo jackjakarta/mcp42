@@ -5,12 +5,14 @@
   "keywords": [],
   "license": "ISC",
   "author": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
+    "build": "tsc",
     "dev": "tsx watch src/index.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "start": "tsx src/index.ts",
+    "start:prod": "node dist/index.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "types": "tsc --noEmit"

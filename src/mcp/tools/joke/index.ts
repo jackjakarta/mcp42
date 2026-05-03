@@ -1,8 +1,8 @@
 import { type McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { type CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
-import { getJokeHandler } from './handler';
-import { inputSchema, outputSchema } from './schemas';
+import { getJokeHandler } from './handler.js';
+import { inputSchema, outputSchema } from './schemas.js';
 
 export function registerJokeTool(server: McpServer): void {
   server.registerTool(
