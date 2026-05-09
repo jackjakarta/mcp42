@@ -12,8 +12,14 @@ import { registerGetChordTool } from './get-chord/index.js';
 import { registerGetDiatonicChordsTool } from './get-diatonic-chords/index.js';
 import { registerGetIntervalTool } from './get-interval/index.js';
 import { registerGetKeyTool } from './get-key/index.js';
+import { registerGetModeTool } from './get-mode/index.js';
 import { registerGetNoteInfoTool } from './get-note-info/index.js';
+import { registerGetProgressionTool } from './get-progression/index.js';
 import { registerGetScaleTool } from './get-scale/index.js';
+import { registerListCadencesTool } from './list-cadences/index.js';
+import { registerListVoicingsTool } from './list-voicings/index.js';
+import { registerSearchModesTool } from './search-modes/index.js';
+import { registerSearchProgressionsTool } from './search-progressions/index.js';
 import { registerSuggestSubstitutionsTool } from './suggest-substitutions/index.js';
 import { registerTransposeProgressionTool } from './transpose-progression/index.js';
 import { registerTransposeTool } from './transpose/index.js';
@@ -36,4 +42,10 @@ export function registerAllTools(server: McpServer): void {
   registerGenerateArpeggioMidiTool(server);
   registerGenerateBasslineMidiTool(server);
   registerGenerateDrumPatternMidiTool(server);
+  registerSearchProgressionsTool(server);
+  registerGetProgressionTool(server);
+  registerSearchModesTool(server);
+  registerGetModeTool(server);
+  registerListVoicingsTool(server);
+  registerListCadencesTool(server);
 }
