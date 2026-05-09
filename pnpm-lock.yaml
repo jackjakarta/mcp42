@@ -22,6 +22,9 @@ importers:
       hono:
         specifier: 4.12.14
         version: 4.12.14
+      midi-writer-js:
+        specifier: 3.2.1
+        version: 3.2.1
       pg:
         specifier: 8.20.0
         version: 8.20.0
@@ -2588,6 +2591,12 @@ packages:
       }
     engines: { node: '>=18' }
 
+  midi-writer-js@3.2.1:
+    resolution:
+      {
+        integrity: sha512-mILW/zthDiinxd/fsVfCe0XWef0hHQzS+fukjS3W+gwBG3ljur241u7CsEC5T+9cOwIPVZCgw37pjKiKb7LJ1g==,
+      }
+
   mime-db@1.54.0:
     resolution:
       {
@@ -4845,6 +4854,10 @@ snapshots:
   media-typer@1.1.0: {}
 
   merge-descriptors@2.0.0: {}
+
+  midi-writer-js@3.2.1:
+    dependencies:
+      '@tonaljs/midi': 4.10.2
 
   mime-db@1.54.0: {}
 

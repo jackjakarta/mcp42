@@ -30,6 +30,6 @@
     ],
     "deny": ["Bash(pnpm db:migrate *)"]
   },
-  "enabledMcpjsonServers": [],
-  "disabledMcpjsonServers": ["mcpFortyTwo"]
+  "enabledMcpjsonServers": ["mcpFortyTwo"],
+  "disabledMcpjsonServers": []
 }

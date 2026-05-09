@@ -3,6 +3,11 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { registerAnalyzeProgressionTool } from './analyze-progression/index.js';
 import { registerAnalyzeVoiceLeadingTool } from './analyze-voice-leading/index.js';
 import { registerDetectKeyTool } from './detect-key/index.js';
+import { registerGenerateArpeggioMidiTool } from './generate-arpeggio-midi/index.js';
+import { registerGenerateBasslineMidiTool } from './generate-bassline-midi/index.js';
+import { registerGenerateDrumPatternMidiTool } from './generate-drum-pattern-midi/index.js';
+import { registerGenerateProgressionMidiTool } from './generate-progression-midi/index.js';
+import { registerGenerateScaleMidiTool } from './generate-scale-midi/index.js';
 import { registerGetChordTool } from './get-chord/index.js';
 import { registerGetDiatonicChordsTool } from './get-diatonic-chords/index.js';
 import { registerGetIntervalTool } from './get-interval/index.js';
@@ -26,4 +31,9 @@ export function registerAllTools(server: McpServer): void {
   registerGetDiatonicChordsTool(server);
   registerSuggestSubstitutionsTool(server);
   registerAnalyzeVoiceLeadingTool(server);
+  registerGenerateProgressionMidiTool(server);
+  registerGenerateScaleMidiTool(server);
+  registerGenerateArpeggioMidiTool(server);
+  registerGenerateBasslineMidiTool(server);
+  registerGenerateDrumPatternMidiTool(server);
 }
