@@ -26,10 +26,13 @@
 
       "mcp__mcpFortyTwo__get-key",
       "mcp__mcpFortyTwo__get-scale",
-      "mcp__mcpFortyTwo__get-chord"
+      "mcp__mcpFortyTwo__get-chord",
+      "mcp__mcpFortyTwo__generate-progression-midi",
+      "mcp__mcpFortyTwo__generate-bassline-midi",
+      "mcp__mcpFortyTwo__generate-drum-pattern-midi"
     ],
-    "deny": ["Bash(pnpm db:migrate *)"]
+    "deny": ["Bash(pnpm db:migrate *)", "Bash(pnpm db:seed *)"]
   },
-  "enabledMcpjsonServers": [],
-  "disabledMcpjsonServers": ["mcpFortyTwo"]
+  "enabledMcpjsonServers": ["mcpFortyTwo"],
+  "disabledMcpjsonServers": []
 }
