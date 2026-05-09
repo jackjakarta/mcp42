@@ -8,6 +8,7 @@
     "checks": "$(git rev-parse --show-toplevel)/scripts/checks.sh",
     "db:generate": "drizzle-kit generate --config=./src/db/drizzle.config.ts",
     "db:migrate": "envee -f .env -- drizzle-kit migrate --config=./src/db/drizzle.config.ts",
+    "db:seed": "envee -f .env -- tsx src/db/seed/music.ts",
     "dev": "envee -f .env -- tsx watch src/index.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
