@@ -2,7 +2,7 @@
   "mcpServers": {
     "mcpFortyTwo": {
       "type": "http",
-      "url": "http://localhost:3000/mcp"
+      "url": "https://mcp.jackjakarta.xyz/mcp"
     }
   }
 }
