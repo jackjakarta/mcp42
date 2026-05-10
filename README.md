@@ -94,20 +94,20 @@ The `docker-compose.yml` ships a Postgres matching those credentials.
 
 ### Scripts
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Hot-reload dev server via `tsx watch` |
-| `pnpm start` | One-shot run via `tsx` (no build) |
-| `pnpm build` | `tsc` to `dist/` |
-| `pnpm start:prod` | Run the compiled output |
-| `pnpm types` | Type-check only |
-| `pnpm lint` | ESLint (type-aware) |
-| `pnpm test` / `pnpm test:watch` | Vitest |
-| `pnpm format` / `pnpm format:check` | Prettier |
-| `pnpm db:generate` | Emit a new Drizzle migration |
-| `pnpm db:migrate` | Apply migrations |
-| `pnpm db:seed` | Seed the music knowledge graph |
-| `pnpm checks` | `format:check` + `lint` + `types` + `test` (matches CI) |
+| Command                             | What it does                                            |
+| ----------------------------------- | ------------------------------------------------------- |
+| `pnpm dev`                          | Hot-reload dev server via `tsx watch`                   |
+| `pnpm start`                        | One-shot run via `tsx` (no build)                       |
+| `pnpm build`                        | `tsc` to `dist/`                                        |
+| `pnpm start:prod`                   | Run the compiled output                                 |
+| `pnpm types`                        | Type-check only                                         |
+| `pnpm lint`                         | ESLint (type-aware)                                     |
+| `pnpm test` / `pnpm test:watch`     | Vitest                                                  |
+| `pnpm format` / `pnpm format:check` | Prettier                                                |
+| `pnpm db:generate`                  | Emit a new Drizzle migration                            |
+| `pnpm db:migrate`                   | Apply migrations                                        |
+| `pnpm db:seed`                      | Seed the music knowledge graph                          |
+| `pnpm checks`                       | `format:check` + `lint` + `types` + `test` (matches CI) |
 
 ## Architecture
 

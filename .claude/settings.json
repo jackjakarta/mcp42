@@ -24,6 +24,11 @@
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
 
+      "mcp__stitch__list_projects",
+      "mcp__stitch__get_project",
+      "mcp__stitch__list_screens",
+      "mcp__stitch__get_screen",
+
       "mcp__mcpFortyTwo__get-key",
       "mcp__mcpFortyTwo__get-scale",
       "mcp__mcpFortyTwo__get-chord",
@@ -33,6 +38,6 @@
     ],
     "deny": ["Bash(pnpm db:migrate *)", "Bash(pnpm db:seed *)"]
   },
-  "enabledMcpjsonServers": ["mcpFortyTwo"],
-  "disabledMcpjsonServers": []
+  "enabledMcpjsonServers": ["stitch"],
+  "disabledMcpjsonServers": ["mcpFortyTwo"]
 }

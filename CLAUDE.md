@@ -69,3 +69,10 @@ Local Postgres for development: `docker-compose up -d` (single `postgres` servic
 ## Libraries
 
 When working with libraries always use the context7 MCP tools — never guess APIs from memory. This applies in particular to `tonal`, `midi-writer-js`, `drizzle-orm`, and `@modelcontextprotocol/sdk`, where APIs differ subtly between versions.
+
+## Design
+
+The design for this project's landing page and UI lives in Google Stitch.
+Project URL: https://stitch.withgoogle.com/projects/9042073859738759270
+
+You can use the mcp stitch tools to interact with the design when implementing it.
