@@ -1,0 +1,62 @@
+---
+title: Tools
+description: All MCP tools exposed by mcpFortyTwo, grouped by domain.
+---
+
+import { LinkCard, CardGrid, Aside } from '@astrojs/starlight/components';
+
+mcpFortyTwo registers every tool through a single fan-out in `src/mcp/tools/index.ts`. Each tool ships:
+
+- A **Zod input schema** validated at call time.
+- A **Zod output schema** mirrored into the response's `structuredContent`.
+- A human-readable text rendering returned as the tool's `content` block.
+
+All pages below are generated directly from those definitions, so they cannot drift from the live server.
+
+## Music theory
+
+Atomic queries against [`tonal`](https://github.com/tonaljs/tonal): chords, scales, keys, modes, intervals.
+
+<CardGrid>
+  <LinkCard title="get-chord" href="/docs/tools/get-chord/" description="Parse a chord symbol → root, quality, notes, intervals, extensions, bass." />
+  <LinkCard title="get-scale" href="/docs/tools/get-scale/" description="Spell a scale and its mode characteristics." />
+  <LinkCard title="get-key" href="/docs/tools/get-key/" description="Diatonic chords, signature and scale notes for a key." />
+  <LinkCard title="get-mode" href="/docs/tools/get-mode/" description="Detailed information about a single mode." />
+  <LinkCard title="get-interval" href="/docs/tools/get-interval/" description="Interval between two pitches with both shorthand and English names." />
+  <LinkCard title="get-note-info" href="/docs/tools/get-note-info/" description="Enharmonic, frequency, MIDI number and octave for a note." />
+  <LinkCard title="get-diatonic-chords" href="/docs/tools/get-diatonic-chords/" description="The seven diatonic chords for a key, with Roman-numeral functions." />
+  <LinkCard title="get-progression" href="/docs/tools/get-progression/" description="Expand a Roman-numeral progression in a key." />
+  <LinkCard title="analyze-progression" href="/docs/tools/analyze-progression/" description="Roman-numeral / functional analysis of a sequence of chords." />
+  <LinkCard title="analyze-voice-leading" href="/docs/tools/analyze-voice-leading/" description="Voice-leading distance, parallels and common-tone retention." />
+  <LinkCard title="detect-key" href="/docs/tools/detect-key/" description="Best-fit key for a list of chords or notes, with confidence." />
+  <LinkCard title="transpose" href="/docs/tools/transpose/" description="Transpose a single chord or note by an interval." />
+  <LinkCard title="transpose-progression" href="/docs/tools/transpose-progression/" description="Transpose an entire progression preserving voicings." />
+  <LinkCard title="suggest-substitutions" href="/docs/tools/suggest-substitutions/" description="Reharmonization candidates (tritone, secondary dominant, modal interchange…)." />
+</CardGrid>
+
+## Knowledge graph
+
+Curated catalogue stored in Postgres, queried via Drizzle.
+
+<CardGrid>
+  <LinkCard title="search-progressions" href="/docs/tools/search-progressions/" description="Filter the progression catalogue by name, key, function or tag." />
+  <LinkCard title="search-modes" href="/docs/tools/search-modes/" description="Find modes by family, brightness or characteristic interval." />
+  <LinkCard title="list-cadences" href="/docs/tools/list-cadences/" description="Enumerate canonical cadences with their Roman-numeral patterns." />
+  <LinkCard title="list-voicings" href="/docs/tools/list-voicings/" description="Available voicings for the MIDI generators (closed, drop-2, shell, …)." />
+</CardGrid>
+
+## MIDI generation
+
+Each generator returns a Standard MIDI File Type 1 (480 PPQ) as a base64 string plus metadata. Decode with `base64 -d > out.mid` and drop into any DAW.
+
+<CardGrid>
+  <LinkCard title="generate-progression-midi" href="/docs/tools/generate-progression-midi/" description="Chord progression with selectable voicing, tempo and time signature." />
+  <LinkCard title="generate-scale-midi" href="/docs/tools/generate-scale-midi/" description="A scale run across one or more octaves." />
+  <LinkCard title="generate-arpeggio-midi" href="/docs/tools/generate-arpeggio-midi/" description="Arpeggiated chord pattern (up, down, alternating, etc.)." />
+  <LinkCard title="generate-bassline-midi" href="/docs/tools/generate-bassline-midi/" description="Bassline that follows a progression — root, walking, or pattern-based." />
+  <LinkCard title="generate-drum-pattern-midi" href="/docs/tools/generate-drum-pattern-midi/" description="Drum pattern on GM channel 10 (kick/snare/hat/etc.)." />
+</CardGrid>
+
+<Aside type="tip">
+  The reference pages linked above are regenerated on every build. If you add or change a tool's Zod schema, just run `pnpm docs:gen` to refresh them.
+</Aside>

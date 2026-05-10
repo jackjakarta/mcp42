@@ -1,0 +1,17 @@
+{
+  "name": "mcp-fortytwo-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "dev": "astro dev",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "5.0.4",
+    "@astrojs/starlight": "0.39.2",
+    "astro": "6.3.1"
+  },
+  "packageManager": "pnpm@9.15.3"
+}

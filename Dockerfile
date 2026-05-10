@@ -15,6 +15,9 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json pnpm-lock.yaml tsconfig.json ./
 COPY src ./src
+COPY scripts ./scripts
+COPY public ./public
+COPY docs-src ./docs-src
 RUN pnpm build
 
 FROM base AS prod-deps
@@ -33,7 +36,7 @@ RUN addgroup --system --gid 1001 nodejs && \
 
 COPY --from=prod-deps --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
-COPY --chown=nodejs:nodejs public ./public
+COPY --from=builder --chown=nodejs:nodejs /app/public ./public
 COPY --chown=nodejs:nodejs package.json ./
 
 USER nodejs
