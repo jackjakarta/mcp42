@@ -1,4 +1,5 @@
 import { type HttpBindings } from '@hono/node-server';
+import { serveStatic } from '@hono/node-server/serve-static';
 import { RESPONSE_ALREADY_SENT } from '@hono/node-server/utils/response';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { Hono } from 'hono';
@@ -28,6 +29,8 @@ export function createApp() {
     await transport.handleRequest(ctx.env.incoming, ctx.env.outgoing, body);
     return RESPONSE_ALREADY_SENT;
   });
+
+  app.use('/*', serveStatic({ root: './public', index: 'index.html' }));
 
   return app;
 }

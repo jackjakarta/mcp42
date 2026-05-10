@@ -3,6 +3,13 @@
     "mcpFortyTwo": {
       "type": "http",
       "url": "https://mcp.jackjakarta.xyz/mcp"
+    },
+    "stitch": {
+      "type": "http",
+      "url": "https://stitch.googleapis.com/mcp",
+      "headers": {
+        "X-Goog-Api-Key": "${GOOGLE_STITCH_API_KEY}"
+      }
     }
   }
 }
