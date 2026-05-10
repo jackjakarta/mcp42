@@ -4,10 +4,13 @@
 .vscode
 
 node_modules
+**/node_modules
 dist
 build
 coverage
-scripts
+docs-src/.astro
+docs-src/dist
+public/docs
 
 .DS_Store
 .env*

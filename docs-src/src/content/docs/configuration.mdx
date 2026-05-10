@@ -1,0 +1,82 @@
+---
+title: Configuration
+description: Environment variables, Postgres, Docker, and the build pipeline.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Requirements
+
+- Node `v24.14.1` (`.nvmrc`)
+- `pnpm@9.15.3` — pinned via `packageManager`; npm/yarn are not supported.
+- Docker, for local Postgres.
+
+## Environment variables
+
+Loaded via `envee -f .env --` in every dev and start script.
+
+| Variable       | Required | Default | Description                                                       |
+| -------------- | :------: | ------- | ----------------------------------------------------------------- |
+| `DATABASE_URL` |    ✓     | —       | Postgres connection string. Used by both Drizzle and the runtime. |
+| `PORT`         |          | `3000`  | Port the Hono server listens on.                                  |
+
+A working local value matching the bundled `docker-compose.yml`:
+
+```bash title=".env"
+DATABASE_URL=postgres://postgres:h4yuasd6@localhost:5432/local-nextjs
+PORT=3000
+```
+
+## Local Postgres
+
+```bash
+docker-compose up -d
+```
+
+Starts a single `postgres` service on `:5432` with database `local-nextjs` and credentials `postgres` / `h4yuasd6`. Then run the migrations:
+
+```bash
+pnpm db:migrate
+pnpm db:seed   # optional — loads the curated music knowledge graph
+```
+
+## Scripts
+
+| Command                             | What it does                                              |
+| ----------------------------------- | --------------------------------------------------------- |
+| `pnpm dev`                          | Hot-reload dev server via `tsx watch`.                    |
+| `pnpm start`                        | One-shot run via `tsx` (no build).                        |
+| `pnpm build`                        | Compiles the server with `tsc` **and** builds these docs. |
+| `pnpm start:prod`                   | Runs the compiled output from `dist/`.                    |
+| `pnpm types`                        | Type-check only.                                          |
+| `pnpm lint`                         | ESLint, type-aware.                                       |
+| `pnpm test` / `pnpm test:watch`     | Vitest.                                                   |
+| `pnpm format` / `pnpm format:check` | Prettier.                                                 |
+| `pnpm checks`                       | `format:check` + `lint` + `types` + `test` (matches CI).  |
+| `pnpm docs:gen`                     | Regenerate the per-tool MDX reference from Zod schemas.   |
+| `pnpm docs:dev`                     | Run the Starlight dev server for these docs.              |
+| `pnpm docs:build`                   | Build the docs into `public/docs/`.                       |
+
+## Docker
+
+```bash
+docker build -t mcp-forty-two .
+docker run --rm -p 3000:3000 -e DATABASE_URL=... mcp-forty-two
+```
+
+The multi-stage build on `node:24.14.1-alpine` produces a single image that serves the landing page at `/`, the docs at `/docs/`, the MCP transport at `/mcp` and a health probe at `/health`. Runs as non-root user `nodejs`.
+
+<Aside>
+  The docs you're reading right now are built during `pnpm build` and shipped inside the same image, so a single deployment serves the API and the docs together.
+</Aside>
+
+## How the docs reference stays in sync
+
+Every page under [Tools](/docs/tools/) is generated from the **same `registerTool` calls** the running MCP server uses — see `scripts/generate-tool-docs.ts`. The generator:
+
+1. Imports `registerAllTools` from `src/mcp/tools/index.ts`.
+2. Passes a fake `McpServer` shim that captures each registration: `name`, `title`, `description`, `inputSchema`, `outputSchema`, `annotations`.
+3. Converts each Zod schema to JSON Schema via `zod-to-json-schema`.
+4. Emits one MDX file per tool into `docs-src/src/content/docs/tools/`.
+
+The generator runs as part of `pnpm build`. The tool MDX files are gitignored so the source of truth is always the code.

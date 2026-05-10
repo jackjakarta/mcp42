@@ -1,2 +1,8 @@
 node_modules
 .dockerignore
+public/docs
+docs-src/dist
+docs-src/.astro
+docs-src/pnpm-lock.yaml
+docs-src/src/content/docs/tools/*.mdx
+!docs-src/src/content/docs/tools/index.mdx

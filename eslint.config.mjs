@@ -14,5 +14,12 @@ export default defineConfig(
       },
     },
   },
-  globalIgnores(['node_modules/**', 'dist/**', '*.config.*']),
+  globalIgnores([
+    'node_modules/**',
+    'dist/**',
+    '*.config.*',
+    'scripts/**',
+    'docs-src/**',
+    'public/**',
+  ]),
 );

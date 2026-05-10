@@ -1,0 +1,51 @@
+---
+title: mcpFortyTwo
+description: Music-theory and MIDI tools for the Model Context Protocol.
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+An [MCP](https://modelcontextprotocol.io/) server that exposes music-theory analysis and MIDI generation as tools any MCP-capable client can call. Ask Claude (or any client that speaks Streamable HTTP MCP) to spell chords, detect keys, suggest reharmonizations, and render basslines, drum patterns, scales, arpeggios and full progressions as Standard MIDI Files — without leaving the chat.
+
+## What you get
+
+<CardGrid>
+  <Card title="Music theory" icon="puzzle">
+    Chords, scales, keys, modes, intervals, diatonic harmony, voice leading,
+    Roman-numeral analysis, key detection, substitutions and transposition —
+    all backed by [`tonal`](https://github.com/tonaljs/tonal).
+  </Card>
+  <Card title="MIDI generation" icon="seti:audio">
+    Progressions, basslines, drum patterns, scales and arpeggios rendered as
+    Standard MIDI File Type 1 (480 PPQ), returned base64-encoded so the host
+    can decode straight into a DAW.
+  </Card>
+  <Card title="Knowledge graph" icon="seti:db">
+    Postgres + Drizzle catalogue of curated progressions, modes, voicings and
+    cadences, queryable through dedicated MCP tools.
+  </Card>
+  <Card title="Streamable HTTP" icon="rocket">
+    Stateless per-request transport — point any MCP client at `/mcp` and it
+    works. No long-running session state, no install.
+  </Card>
+</CardGrid>
+
+## Where to go next
+
+<CardGrid>
+  <LinkCard
+    title="Getting started"
+    description="Connect Claude or another MCP client to the hosted server, or run mcpFortyTwo locally."
+    href="/docs/getting-started/"
+  />
+  <LinkCard
+    title="Configuration"
+    description="Environment variables, Postgres, Docker and the build pipeline."
+    href="/docs/configuration/"
+  />
+  <LinkCard
+    title="Tool reference"
+    description="Auto-generated reference for every registered MCP tool — inputs, outputs and annotations."
+    href="/docs/tools/"
+  />
+</CardGrid>

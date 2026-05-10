@@ -1,0 +1,67 @@
+---
+title: Getting started
+description: Connect an MCP client to mcpFortyTwo, then call your first tool.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+mcpFortyTwo speaks the Model Context Protocol over Streamable HTTP at `/mcp`. Any MCP-capable client that supports the `http` transport can connect — there is nothing to install on the client side.
+
+## Pick a server
+
+<Tabs>
+  <TabItem label="Hosted">
+    A public instance runs at `https://mcp.jackjakarta.xyz/mcp`. Use this if you just want to try it out — no setup required.
+  </TabItem>
+  <TabItem label="Local">
+    Run mcpFortyTwo on your machine — see [Configuration](/docs/configuration/) for the full setup, then start it with `pnpm dev`. The MCP endpoint is `http://localhost:3000/mcp`.
+  </TabItem>
+</Tabs>
+
+## Add it to your MCP client
+
+The config shape is identical across Claude Desktop, Claude Code, and most other MCP-capable clients.
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "mcpFortyTwo": {
+      "type": "http",
+      "url": "https://mcp.jackjakarta.xyz/mcp"
+    }
+  }
+}
+```
+
+Swap the URL for `http://localhost:3000/mcp` if you are running locally. Reload your client and confirm the tools show up — in Claude Code, run `/mcp` to list connected servers and their tool counts.
+
+## Call your first tool
+
+Ask your client to spell a chord — it should pick `get-chord` automatically. The structured result looks like:
+
+```json
+{
+  "root": "C",
+  "quality": "Major Seventh",
+  "notes": ["C", "E", "G", "B"],
+  "intervals": ["1P", "3M", "5P", "7M"],
+  "extensions": ["7M"]
+}
+```
+
+Every tool returns both a human-readable `text` content block (for the model to render) and a typed `structuredContent` payload (for downstream tools to consume).
+
+For MIDI tools like `generate-progression-midi`, the `structuredContent` includes a base64 `midi` field — pipe it through `base64 -d > out.mid` to play it back in any DAW.
+
+<Aside type="tip">
+  Browse the full [tool reference](/docs/tools/) to see every input/output schema. Everything is auto-generated from the same Zod definitions the server uses at runtime, so it cannot drift out of sync.
+</Aside>
+
+## Health check
+
+```bash
+curl https://mcp.jackjakarta.xyz/health
+# → {"ok":true}
+```
+
+Useful for uptime monitors, deployment probes, or confirming a local instance is up before you point a client at it.
