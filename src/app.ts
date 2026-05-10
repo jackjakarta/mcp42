@@ -5,11 +5,18 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import { Hono } from 'hono';
 
 import { createMcpServer } from './mcp/server.js';
+import { LLMS_TXT_TEXT } from './utils/seo/llms.js';
 
 export function createApp() {
   const app = new Hono<{ Bindings: HttpBindings }>();
 
+  app.use('/*', serveStatic({ root: './public', index: 'index.html' }));
+
   app.get('/health', (ctx) => ctx.json({ ok: true }));
+
+  app.get('/llms.txt', (ctx) =>
+    ctx.text(LLMS_TXT_TEXT, 200, { 'Content-Type': 'text/markdown; charset=utf-8' }),
+  );
 
   app.all('/mcp', async (ctx) => {
     const server = createMcpServer();
@@ -29,8 +36,6 @@ export function createApp() {
     await transport.handleRequest(ctx.env.incoming, ctx.env.outgoing, body);
     return RESPONSE_ALREADY_SENT;
   });
-
-  app.use('/*', serveStatic({ root: './public', index: 'index.html' }));
 
   return app;
 }
