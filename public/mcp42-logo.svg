@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 70" width="220" height="70" role="img" aria-labelledby="mcp42-title">
+  <title id="mcp42-title">mcp42</title>
+  <style>
+    .mcp42-text {
+      font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 50px;
+      letter-spacing: -0.01em;
+    }
+    .mcp42-b   { fill: var(--mcp42-bracket, #f97316); font-weight: 500; }
+    .mcp42-ink { fill: var(--mcp42-ink, #e2e2e2); font-weight: 600; }
+    .mcp42-n   { fill: var(--mcp42-amber, #f97316); font-weight: 600; }
+  </style>
+  <text class="mcp42-text" x="5" y="53"><tspan class="mcp42-b">[</tspan><tspan class="mcp42-ink">mcp</tspan><tspan class="mcp42-n">42</tspan><tspan class="mcp42-b">]</tspan></text>
+</svg>

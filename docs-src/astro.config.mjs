@@ -10,6 +10,12 @@ export default defineConfig({
     starlight({
       title: 'mcpFortyTwo',
       description: 'Music-theory and MIDI tools for the Model Context Protocol.',
+      logo: {
+        src: './src/assets/mcp42-logo.svg',
+        replacesTitle: true,
+      },
+      favicon: '/favicon.svg',
+      customCss: ['./src/styles/theme.css'],
       social: [
         {
           icon: 'github',
