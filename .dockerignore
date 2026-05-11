@@ -11,12 +11,15 @@ coverage
 docs-src/.astro
 docs-src/dist
 public/docs
+*.log
 
 .DS_Store
 .env*
 .dockerignore
+.prettierignore
 .mcp.json
 
-*.log
 Dockerfile
 CLAUDE.md
+README.md
+LICENSE

@@ -48,6 +48,6 @@ jobs:
 
       - name: Build and push docker image
         run: |
-          docker build -t ghcr.io/${{ env.DOCKER_USERNAME }}/mcp-fortytwo:${{ env.TAG_VERSION }} -t ghcr.io/${{ env.DOCKER_USERNAME }}/mcp-fortytwo:latest . && \
-          docker push ghcr.io/${{ env.DOCKER_USERNAME }}/mcp-fortytwo:${{ env.TAG_VERSION }} && \
-          docker push ghcr.io/${{ env.DOCKER_USERNAME }}/mcp-fortytwo:latest
+          docker build -t ghcr.io/${{ env.DOCKER_USERNAME }}/mcp42:${{ env.TAG_VERSION }} -t ghcr.io/${{ env.DOCKER_USERNAME }}/mcp42:latest . && \
+          docker push ghcr.io/${{ env.DOCKER_USERNAME }}/mcp42:${{ env.TAG_VERSION }} && \
+          docker push ghcr.io/${{ env.DOCKER_USERNAME }}/mcp42:latest
