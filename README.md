@@ -4,7 +4,7 @@ An [MCP](https://modelcontextprotocol.io/) server for music theory analysis and 
 
 Built on [Hono](https://hono.dev/), [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk), [`tonal`](https://github.com/tonaljs/tonal) and [`midi-writer-js`](https://github.com/grimmdude/MidiWriterJS), with a Drizzle/Postgres knowledge graph for curated progressions, modes, voicings and cadences.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license) [![Build](https://img.shields.io/github/actions/workflow/status/jackjakarta/mcp-fortytwo/build-prod-image.yml?label=build)](https://github.com/jackjakarta/mcp-fortytwo/actions/workflows/build-prod-image.yml)
 
 ## Tools
 
