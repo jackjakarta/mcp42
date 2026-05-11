@@ -1,0 +1,53 @@
+name: Code Review
+
+on:
+  # pull_request:
+  #   branches: [main]
+  #   types: [opened, ready_for_review]
+
+  workflow_dispatch:
+
+jobs:
+  code-review:
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - name: Load 1password secrets
+        uses: 1password/load-secrets-action@v1
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          ANTHROPIC_API_KEY: 'op://mcp42-app/github-secrets/ANTHROPIC_API_KEY'
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Claude code review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ env.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Please review this pull request with a focus on:
+            - Code quality and best practices
+            - Potential bugs or issues
+            - Security implications
+            - Performance considerations
+
+            Use `gh pr comment` for top-level feedback.
+            Only post GitHub comments — don't submit review text as messages.
+          claude_args: |
+            --model claude-opus-4-7
+            --effort xhigh
+            --allowedTools "Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
