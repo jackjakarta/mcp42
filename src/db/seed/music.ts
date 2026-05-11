@@ -22,7 +22,7 @@ async function seedProgressions(): Promise<number> {
         era: sql`excluded.era`,
         moods: sql`excluded.moods`,
         attribution: sql`excluded.attribution`,
-        updatedAt: sql`now()`,
+        updatedAt: new Date(),
       },
     });
   return PROGRESSIONS.length;
@@ -79,16 +79,16 @@ async function seedCadences(): Promise<number> {
 
 async function main(): Promise<void> {
   const progressions = await seedProgressions();
-  console.log(`  music.progressions  upserted ${progressions} rows`);
+  console.log(`  music_progressions  upserted ${progressions} rows`);
 
   const modes = await seedModes();
-  console.log(`  music.modes         upserted ${modes} rows`);
+  console.log(`  music_modes         upserted ${modes} rows`);
 
   const voicings = await seedVoicings();
-  console.log(`  music.voicings      upserted ${voicings} rows`);
+  console.log(`  music_voicings      upserted ${voicings} rows`);
 
   const cadences = await seedCadences();
-  console.log(`  music.cadences      upserted ${cadences} rows`);
+  console.log(`  music_cadences      upserted ${cadences} rows`);
 }
 
 main()

@@ -1,26 +1,28 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
+import Database from 'better-sqlite3';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
 
-const globalPool = global as unknown as {
-  pool?: Pool;
+import * as schema from './schema/music.js';
+
+const DB_PATH = process.env.SQLITE_PATH ?? './data/music.db';
+
+const globalForDb = globalThis as unknown as {
+  sqlite?: Database.Database;
 };
 
-const connectionString = process.env.DATABASE_URL;
+function getSqlite(): Database.Database {
+  if (globalForDb.sqlite !== undefined) {
+    return globalForDb.sqlite;
+  }
 
-if (connectionString === undefined) {
-  throw new Error('Database URL undefined');
+  const sqlite = new Database(DB_PATH);
+  sqlite.pragma('journal_mode = WAL');
+  sqlite.pragma('foreign_keys = ON');
+
+  if (process.env.NODE_ENV === 'development') {
+    globalForDb.sqlite = sqlite;
+  }
+
+  return sqlite;
 }
 
-const pool =
-  globalPool.pool ??
-  new Pool({
-    connectionString,
-    max: 12,
-  });
-
-// in development mode, store the pool globally to reuse it across hot reloads
-if (process.env.NODE_ENV === 'development') {
-  globalPool.pool = pool;
-}
-
-export const db = drizzle({ client: pool, casing: 'snake_case' });
+export const db = drizzle({ client: getSqlite(), schema, casing: 'snake_case' });

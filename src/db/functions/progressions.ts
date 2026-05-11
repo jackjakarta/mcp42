@@ -1,7 +1,8 @@
-import { and, arrayContains, asc, eq, ilike, type SQL } from 'drizzle-orm';
+import { and, asc, eq, like, type SQL } from 'drizzle-orm';
 
 import { db } from '../index.js';
 import { progressionsTable, type ProgressionModel } from '../schema/music.js';
+import { jsonArrayContains } from './_sql.js';
 
 export type ProgressionSummary = Pick<
   ProgressionModel,
@@ -24,11 +25,11 @@ export async function dbSearchProgressions({
   limit = 50,
 }: SearchProgressionsArgs): Promise<ProgressionSummary[]> {
   const conditions: SQL[] = [];
-  if (genre !== undefined) conditions.push(arrayContains(progressionsTable.genres, [genre]));
-  if (mood !== undefined) conditions.push(arrayContains(progressionsTable.moods, [mood]));
-  if (era !== undefined) conditions.push(ilike(progressionsTable.era, `%${era}%`));
+  if (genre !== undefined) conditions.push(jsonArrayContains(progressionsTable.genres, genre));
+  if (mood !== undefined) conditions.push(jsonArrayContains(progressionsTable.moods, mood));
+  if (era !== undefined) conditions.push(like(progressionsTable.era, `%${era}%`));
   if (romanContains !== undefined) {
-    conditions.push(arrayContains(progressionsTable.romanNumerals, [romanContains]));
+    conditions.push(jsonArrayContains(progressionsTable.romanNumerals, romanContains));
   }
 
   const where = conditions.length > 0 ? and(...conditions) : undefined;
