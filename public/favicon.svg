@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="mcp42">
+  <title>mcp42</title>
+  <circle cx="32" cy="32" r="32" fill="#000000"/>
+  <text x="32" y="40.5" text-anchor="middle"
+        font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="22"
+        letter-spacing="-0.01em"
+        fill="#f97316">
+    <tspan font-weight="500">[</tspan><tspan font-weight="600">42</tspan><tspan font-weight="500">]</tspan>
+  </text>
+</svg>

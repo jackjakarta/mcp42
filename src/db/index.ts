@@ -49,6 +49,7 @@ function getDb(): DrizzleDb {
 
 export const db = new Proxy({} as DrizzleDb, {
   get(_target, prop, receiver) {
+    //eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Reflect.get(getDb() as object, prop, receiver);
   },
 });
