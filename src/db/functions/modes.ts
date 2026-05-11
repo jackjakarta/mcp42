@@ -1,7 +1,8 @@
-import { and, arrayContains, asc, eq, ilike, type SQL } from 'drizzle-orm';
+import { and, asc, eq, like, type SQL } from 'drizzle-orm';
 
 import { db } from '../index.js';
 import { modesTable, type ModeModel } from '../schema/music.js';
+import { jsonArrayContains } from './_sql.js';
 
 export type ModeSummary = Pick<
   ModeModel,
@@ -20,8 +21,8 @@ export async function dbSearchModes({
   parentScale,
 }: SearchModesArgs): Promise<ModeSummary[]> {
   const conditions: SQL[] = [];
-  if (mood !== undefined) conditions.push(ilike(modesTable.mood, `%${mood}%`));
-  if (genre !== undefined) conditions.push(arrayContains(modesTable.commonGenres, [genre]));
+  if (mood !== undefined) conditions.push(like(modesTable.mood, `%${mood}%`));
+  if (genre !== undefined) conditions.push(jsonArrayContains(modesTable.commonGenres, genre));
   if (parentScale !== undefined) conditions.push(eq(modesTable.parentScale, parentScale));
 
   const where = conditions.length > 0 ? and(...conditions) : undefined;

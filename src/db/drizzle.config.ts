@@ -1,12 +1,13 @@
 import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
-  schema: ['./src/db/schema/app.ts', './src/db/schema/music.ts'],
+  schema: './src/db/schema/music.ts',
   out: './src/db/migrations',
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: './data/music.db',
   },
-  dialect: 'postgresql',
+  dialect: 'sqlite',
+  casing: 'snake_case',
   verbose: true,
   strict: true,
 });

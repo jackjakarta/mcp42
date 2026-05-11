@@ -2,7 +2,7 @@
 
 An [MCP](https://modelcontextprotocol.io/) server for music theory analysis and MIDI generation. Ask Claude (or any MCP-capable client) to spell chords, detect keys, suggest reharmonizations, generate basslines, drum patterns, scales and full progressions as Standard MIDI Files — all without leaving the chat.
 
-Built on [Hono](https://hono.dev/), [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk), [`tonal`](https://github.com/tonaljs/tonal) and [`midi-writer-js`](https://github.com/grimmdude/MidiWriterJS), with a Drizzle/Postgres knowledge graph for curated progressions, modes, voicings and cadences.
+Built on [Hono](https://hono.dev/), [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk), [`tonal`](https://github.com/tonaljs/tonal) and [`midi-writer-js`](https://github.com/grimmdude/MidiWriterJS), with a Drizzle/SQLite knowledge graph for curated progressions, modes, voicings and cadences — bundled directly into the production image.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license) [![Build](https://img.shields.io/github/actions/workflow/status/jackjakarta/mcp-fortytwo/build-prod-image.yml?label=build)](https://github.com/jackjakarta/mcp-fortytwo/actions/workflows/build-prod-image.yml)
 
@@ -68,29 +68,27 @@ Call `get-chord` with `{ "symbol": "Cmaj7" }`:
 
 ## Local development
 
-Requirements: Node `v24.14.1` (see `.nvmrc`), `pnpm@9.15.3`, Docker (for Postgres).
+Requirements: Node `v24.14.1` (see `.nvmrc`), `pnpm@9.15.3`. No database server needed — the knowledge graph lives in a local SQLite file at `data/music.db`.
 
 ```bash
 pnpm install
-docker-compose up -d            # local Postgres on :5432
-cp .env.example .env            # then edit DATABASE_URL — see below
-pnpm db:migrate
-pnpm db:seed                    # optional: load curated progressions/modes/voicings/cadences
+pnpm db:migrate                 # creates data/music.db with empty tables
+pnpm db:seed                    # loads curated progressions/modes/voicings/cadences
 pnpm dev                        # tsx watch on PORT or 3000
 ```
 
 Health check: `curl http://localhost:3000/health` → `{"ok":true}`.
 
+To start over from scratch: `rm -rf data && pnpm db:migrate && pnpm db:seed`.
+
 ### Environment
 
-A single variable is required:
+No required variables. Optional:
 
 ```
-DATABASE_URL=postgres://postgres:h4yuasd6@localhost:5432/local-nextjs
-PORT=3000   # optional, defaults to 3000
+PORT=3000           # defaults to 3000
+SQLITE_PATH=...     # defaults to ./data/music.db
 ```
-
-The `docker-compose.yml` ships a Postgres matching those credentials.
 
 ### Scripts
 
@@ -131,8 +129,8 @@ The `docker-compose.yml` ships a Postgres matching those credentials.
 └──────────┬──────────────┘    └─────────────────────────┘
            │
 ┌──────────▼──────────────┐
-│  Postgres (Drizzle)     │  src/db/{schema,functions,migrations,seed}
-│  music knowledge graph  │
+│  SQLite (Drizzle)       │  src/db/{schema,functions,migrations,seed}
+│  music knowledge graph  │  bundled at data/music.db
 └─────────────────────────┘
 ```
 
@@ -154,10 +152,10 @@ Keep handlers thin — most logic belongs in `src/music/` next to its `*.test.ts
 
 ```bash
 docker build -t mcp-forty-two .
-docker run --rm -p 3000:3000 -e DATABASE_URL=... mcp-forty-two
+docker run --rm -p 3000:3000 mcp-forty-two
 ```
 
-Multi-stage build on `node:24.14.1-alpine`, runs as non-root `nodejs`, exposes `3000`.
+Multi-stage build on `node:24.14.1-alpine`, runs as non-root `nodejs`, exposes `3000`. The pre-seeded `data/music.db` is baked into the image during the `builder` stage, so the container is fully self-contained — no external database, no env required. To ship updated data, rebuild the image.
 
 ## Tech stack
 
@@ -165,7 +163,7 @@ Multi-stage build on `node:24.14.1-alpine`, runs as non-root `nodejs`, exposes `
 - **MCP**: `@modelcontextprotocol/sdk` over Streamable HTTP
 - **Music**: `tonal`, `midi-writer-js`
 - **Validation**: Zod
-- **Database**: Postgres + Drizzle ORM
+- **Database**: SQLite (`better-sqlite3`) + Drizzle ORM, bundled into the image
 - **Tooling**: TypeScript (`module: Preserve`), ESLint (type-aware), Prettier, Vitest, `tsx`
 
 ## License
