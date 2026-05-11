@@ -31,7 +31,7 @@ Every tool defines a Zod input/output schema and returns both a text rendering a
 
 ### Use the hosted server
 
-A public instance runs at **`https://mcp.jackjakarta.xyz/mcp`**. Point any MCP client at that URL over Streamable HTTP — no install required.
+A public instance runs at **`https://mcp42.jackjakarta.xyz/mcp`**. Point any MCP client at that URL over Streamable HTTP — no install required.
 
 ### Claude Desktop / Claude Code
 
@@ -42,7 +42,7 @@ Add to your MCP client config (`~/.claude/mcp.json`, Claude Desktop's `claude_de
   "mcpServers": {
     "mcpFortyTwo": {
       "type": "http",
-      "url": "https://mcp.jackjakarta.xyz/mcp"
+      "url": "https://mcp42.jackjakarta.xyz/mcp"
     }
   }
 }

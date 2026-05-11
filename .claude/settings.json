@@ -36,8 +36,8 @@
       "mcp__mcpFortyTwo__generate-bassline-midi",
       "mcp__mcpFortyTwo__generate-drum-pattern-midi"
     ],
-    "deny": ["Bash(pnpm db:migrate *)", "Bash(pnpm db:seed *)"]
+    "deny": ["Bash(psql *)", "Bash(pnpm db:migrate *)", "Bash(pnpm db:seed *)"]
   },
-  "enabledMcpjsonServers": ["stitch"],
-  "disabledMcpjsonServers": ["mcpFortyTwo"]
+  "enabledMcpjsonServers": ["stitch", "mcpFortyTwo"],
+  "disabledMcpjsonServers": []
 }

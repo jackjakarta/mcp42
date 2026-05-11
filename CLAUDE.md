@@ -12,15 +12,13 @@ A Hono HTTP server that exposes an MCP (Model Context Protocol) server at `/mcp`
 - **Tool schemas** — Defined with Zod. The SDK takes the `.shape` of the `z.object(...)` (not the object itself) for both `inputSchema` and `outputSchema`. Return `{ content: [...], structuredContent: {...} }` so clients get both the text rendering and the typed payload. Most tools set `annotations: { readOnlyHint: true, idempotentHint: true }`.
 - **Domain layer (`src/music/`)** — Thin wrappers around `tonal` so handlers stay declarative and the underlying library stays swappable (`chords.ts`, `scales.ts`, `keys.ts`, `intervals.ts`, `progressions.ts`, `romanAnalysis.ts`, `voiceLeading.ts`, `substitutions.ts`, `cadences.ts`, `keyDetection.ts`, `transpose.ts`, …). Co-located `*.test.ts` files exercise the wrappers — handlers are intentionally thin so most logic should be tested here, not at the tool layer.
 - **MIDI layer (`src/music/midi/`)** — Wrappers around `midi-writer-js` (`progressionToMidi`, `scaleToMidi`, `arpeggioToMidi`, `basslineToMidi`, `drumPatternToMidi`). Each returns a `Uint8Array` + metadata; the tool layer base64-encodes into `structuredContent`. Output convention: Standard MIDI File Type 1, 480 PPQ, no temp files. `midi-writer-js` ships without types — ambient declarations live in `src/types/midi-writer-js.d.ts`.
-- **Database (`src/db/`)** — Drizzle ORM over `pg`. `src/db/index.ts` lazily constructs a `Pool` from `DATABASE_URL` and stashes it on `globalThis` in development so hot reloads don't leak connections; `casing: 'snake_case'` is set on the drizzle client. Schema lives in `src/db/schema/` (currently `app.ts`); query helpers in `src/db/functions/`; migrations are emitted to `src/db/migrations/` by `drizzle-kit`. The music knowledge graph (progressions/modes/voicings/cadences) is **planned but not yet implemented** — see `SPEC.md` §8–§9.
+- **Database (`src/db/`)** — Drizzle ORM over `pg`. `src/db/index.ts` lazily constructs a `Pool` from `DATABASE_URL` and stashes it on `globalThis` in development so hot reloads don't leak connections; `casing: 'snake_case'` is set on the drizzle client. Schema lives in `src/db/schema/` (`app.ts`, `music.ts`); query helpers in `src/db/functions/`; migrations are emitted to `src/db/migrations/` by `drizzle-kit`. The music knowledge graph (progressions/modes/voicings/cadences) is defined in `src/db/schema/music.ts` and seeded from `src/db/seed/music.ts` (data under `src/db/seed/data/`).
 
 Returning `RESPONSE_ALREADY_SENT` from the `/mcp` handler is required — the MCP transport writes directly to the Node response, bypassing Hono's response pipeline.
 
 `.mcp.json` at the repo root points an MCP client at `http://localhost:3000/mcp` for local development.
 
-## SPEC.md
-
-`SPEC.md` is the rolling build plan for the music-theory / MIDI / KG features and the source of truth for upcoming work. Phases are designed to be independently shippable; consult it before scoping new tools or schema additions so naming and shapes stay consistent with the plan.
+`docs-src/` is a standalone Astro docs site (with its own `package.json`/`pnpm-lock.yaml`) that builds into `public/docs/`; `public/index.html` is the landing page. Neither is part of the MCP server runtime — don't touch them when working on tools, the domain layer, or the DB.
 
 ## Toolchain
 
@@ -44,6 +42,7 @@ From `package.json`:
 - `pnpm format` / `pnpm format:check` — Prettier
 - `pnpm db:generate` — `drizzle-kit generate` (writes SQL into `src/db/migrations/`)
 - `pnpm db:migrate` — `drizzle-kit migrate` against `DATABASE_URL`
+- `pnpm db:seed` — `tsx src/db/seed/music.ts`; loads curated KG data (progressions/modes/voicings/cadences). Optional but required for the `search-*` / `list-*` tools to return anything.
 - `pnpm checks` — runs `scripts/checks.sh` (`format:check`, `lint`, `types`, `test`) — the same gates as the `static-checks.yml` GitHub Action.
 
 Run a single test file / test name:

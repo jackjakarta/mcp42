@@ -11,7 +11,7 @@ mcpFortyTwo speaks the Model Context Protocol over Streamable HTTP at `/mcp`. An
 
 <Tabs>
   <TabItem label="Hosted">
-    A public instance runs at `https://mcp.jackjakarta.xyz/mcp`. Use this if you just want to try it out — no setup required.
+    A public instance runs at `https://mcp42.jackjakarta.xyz/mcp`. Use this if you just want to try it out — no setup required.
   </TabItem>
   <TabItem label="Local">
     Run mcpFortyTwo on your machine — see [Configuration](/docs/configuration/) for the full setup, then start it with `pnpm dev`. The MCP endpoint is `http://localhost:3000/mcp`.
@@ -27,7 +27,7 @@ The config shape is identical across Claude Desktop, Claude Code, and most other
   "mcpServers": {
     "mcpFortyTwo": {
       "type": "http",
-      "url": "https://mcp.jackjakarta.xyz/mcp"
+      "url": "https://mcp42.jackjakarta.xyz/mcp"
     }
   }
 }
@@ -60,7 +60,7 @@ For MIDI tools like `generate-progression-midi`, the `structuredContent` include
 ## Health check
 
 ```bash
-curl https://mcp.jackjakarta.xyz/health
+curl https://mcp42.jackjakarta.xyz/health
 # → {"ok":true}
 ```
 

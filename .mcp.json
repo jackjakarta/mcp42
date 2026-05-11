@@ -2,7 +2,7 @@
   "mcpServers": {
     "mcpFortyTwo": {
       "type": "http",
-      "url": "https://mcp.jackjakarta.xyz/mcp"
+      "url": "https://mcp42.jackjakarta.xyz/mcp"
     },
     "stitch": {
       "type": "http",
