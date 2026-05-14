@@ -2,7 +2,7 @@
   "mcpServers": {
     "mcp42": {
       "type": "http",
-      "url": "https://mcp42.jackjakarta.xyz/mcp"
+      "url": "http://localhost:3000/mcp"
     },
     "stitch": {
       "type": "http",
