@@ -1,4 +1,4 @@
-# mcpFortyTwo
+# mcp42
 
 An [MCP](https://modelcontextprotocol.io/) server for music theory analysis and MIDI generation. Ask Claude (or any MCP-capable client) to spell chords, detect keys, suggest reharmonizations, generate basslines, drum patterns, scales and full progressions as Standard MIDI Files — all without leaving the chat.
 
@@ -40,7 +40,7 @@ Add to your MCP client config (`~/.claude/mcp.json`, Claude Desktop's `claude_de
 ```json
 {
   "mcpServers": {
-    "mcpFortyTwo": {
+    "mcp42": {
       "type": "http",
       "url": "https://mcp42.jackjakarta.xyz/mcp"
     }

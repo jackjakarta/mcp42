@@ -5,7 +5,7 @@ import { createApp } from './app.js';
 const port = Number(process.env.PORT ?? 3000);
 
 const server = serve({ fetch: createApp().fetch, port }, (info) => {
-  console.info(`mcpFortyTwo listening on http://localhost:${info.port} (MCP at /mcp)`);
+  console.info(`mcp42 listening on http://localhost:${info.port} (MCP at /mcp)`);
 });
 
 process.on('SIGINT', () => {
