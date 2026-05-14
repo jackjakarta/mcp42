@@ -1,11 +1,11 @@
 ---
 title: Getting started
-description: Connect an MCP client to mcpFortyTwo, then call your first tool.
+description: Connect an MCP client to mcp42, then call your first tool.
 ---
 
 import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-mcpFortyTwo speaks the Model Context Protocol over Streamable HTTP at `/mcp`. Any MCP-capable client that supports the `http` transport can connect — there is nothing to install on the client side.
+mcp42 speaks the Model Context Protocol over Streamable HTTP at `/mcp`. Any MCP-capable client that supports the `http` transport can connect — there is nothing to install on the client side.
 
 ## Pick a server
 
@@ -14,7 +14,7 @@ mcpFortyTwo speaks the Model Context Protocol over Streamable HTTP at `/mcp`. An
     A public instance runs at `https://mcp42.jackjakarta.xyz/mcp`. Use this if you just want to try it out — no setup required.
   </TabItem>
   <TabItem label="Local">
-    Run mcpFortyTwo on your machine — see [Configuration](/docs/configuration/) for the full setup, then start it with `pnpm dev`. The MCP endpoint is `http://localhost:3000/mcp`.
+    Run mcp42 on your machine — see [Configuration](/docs/configuration/) for the full setup, then start it with `pnpm dev`. The MCP endpoint is `http://localhost:3000/mcp`.
   </TabItem>
 </Tabs>
 
@@ -25,7 +25,7 @@ The config shape is identical across Claude Desktop, Claude Code, and most other
 ```json title=".mcp.json"
 {
   "mcpServers": {
-    "mcpFortyTwo": {
+    "mcp42": {
       "type": "http",
       "url": "https://mcp42.jackjakarta.xyz/mcp"
     }

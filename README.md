@@ -4,7 +4,7 @@ An [MCP](https://modelcontextprotocol.io/) server for music theory analysis and 
 
 Built on [Hono](https://hono.dev/), [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk), [`tonal`](https://github.com/tonaljs/tonal) and [`midi-writer-js`](https://github.com/grimmdude/MidiWriterJS), with a Drizzle/SQLite knowledge graph for curated progressions, modes, voicings and cadences — bundled directly into the production image.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license) [![Build](https://img.shields.io/github/actions/workflow/status/jackjakarta/mcp-fortytwo/build-prod-image.yml?label=build)](https://github.com/jackjakarta/mcp-fortytwo/actions/workflows/build-prod-image.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license) [![Build](https://img.shields.io/github/actions/workflow/status/jackjakarta/mcp42/build-prod-image.yml?label=build)](https://github.com/jackjakarta/mcp42/actions/workflows/build-prod-image.yml)
 
 ## Tools
 
@@ -151,8 +151,8 @@ Keep handlers thin — most logic belongs in `src/music/` next to its `*.test.ts
 ## Docker
 
 ```bash
-docker build -t mcp-forty-two .
-docker run --rm -p 3000:3000 mcp-forty-two
+docker build -t mcp42 .
+docker run --rm -p 3000:3000 mcp42
 ```
 
 Multi-stage build on `node:24.14.1-alpine`, runs as non-root `nodejs`, exposes `3000`. The pre-seeded `data/music.db` is baked into the image during the `builder` stage, so the container is fully self-contained — no external database, no env required. To ship updated data, rebuild the image.

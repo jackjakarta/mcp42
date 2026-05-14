@@ -1,12 +1,12 @@
-export const LLMS_TXT_TEXT = `# mcpFortyTwo
+export const LLMS_TXT_TEXT = `# mcp42
 
 > An MCP server for music-theory analysis and MIDI generation — spell chords, detect keys, suggest reharmonizations, and render basslines, drum patterns, scales, arpeggios and full progressions as Standard MIDI Files, all from any MCP-capable client.
 
-mcpFortyTwo speaks the Model Context Protocol over Streamable HTTP at \`/mcp\`. A public instance runs at https://mcp42.jackjakarta.xyz/mcp. Every tool ships a Zod input/output schema and returns both a text rendering and a typed \`structuredContent\` payload, so clients get strongly-typed results without an extra parsing step.
+mcp42 speaks the Model Context Protocol over Streamable HTTP at \`/mcp\`. A public instance runs at https://mcp42.jackjakarta.xyz/mcp. Every tool ships a Zod input/output schema and returns both a text rendering and a typed \`structuredContent\` payload, so clients get strongly-typed results without an extra parsing step.
 
 ## Docs
 
-- [Overview](https://mcp42.jackjakarta.xyz/docs/): What mcpFortyTwo is and what it exposes.
+- [Overview](https://mcp42.jackjakarta.xyz/docs/): What mcp42 is and what it exposes.
 - [Getting started](https://mcp42.jackjakarta.xyz/docs/getting-started/): Connect an MCP client to the hosted server, then call your first tool.
 - [Configuration](https://mcp42.jackjakarta.xyz/docs/configuration/): Environment variables, Postgres, Docker and the build pipeline.
 - [Tool reference](https://mcp42.jackjakarta.xyz/docs/tools/): Auto-generated reference for every registered MCP tool — inputs, outputs and annotations.
