@@ -1,11 +1,11 @@
 ---
 title: Tools
-description: All MCP tools exposed by mcpFortyTwo, grouped by domain.
+description: All MCP tools exposed by mcp42, grouped by domain.
 ---
 
 import { LinkCard, CardGrid, Aside } from '@astrojs/starlight/components';
 
-mcpFortyTwo registers every tool through a single fan-out in `src/mcp/tools/index.ts`. Each tool ships:
+mcp42 registers every tool through a single fan-out in `src/mcp/tools/index.ts`. Each tool ships:
 
 - A **Zod input schema** validated at call time.
 - A **Zod output schema** mirrored into the response's `structuredContent`.

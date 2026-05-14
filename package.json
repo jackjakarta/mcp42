@@ -1,5 +1,5 @@
 {
-  "name": "mcp-forty-two",
+  "name": "mcp42",
   "version": "0.4.5",
   "private": true,
   "description": "MCP Server for chord analysis and MIDI generation.",

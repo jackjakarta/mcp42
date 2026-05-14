@@ -28,7 +28,7 @@ PORT=3000
 
 ## Local database
 
-mcpFortyTwo uses an embedded SQLite database via `better-sqlite3` — no separate service to run. The file is created automatically on first connection at `SQLITE_PATH` (default `./data/music.db`).
+mcp42 uses an embedded SQLite database via `better-sqlite3` — no separate service to run. The file is created automatically on first connection at `SQLITE_PATH` (default `./data/music.db`).
 
 Apply the schema and, optionally, the curated knowledge graph:
 
@@ -62,8 +62,8 @@ The `search-*` and `list-*` tools return empty results until you've run `db:seed
 ## Docker
 
 ```bash
-docker build -t mcp-forty-two .
-docker run --rm -p 3000:3000 mcp-forty-two
+docker build -t mcp42 .
+docker run --rm -p 3000:3000 mcp42
 ```
 
 The multi-stage build on `node:24.14.1-alpine` produces a single image that serves the landing page at `/`, the docs at `/docs/`, the MCP transport at `/mcp` and a health probe at `/health`. Runs as non-root user `nodejs`.

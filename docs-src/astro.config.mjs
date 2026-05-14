@@ -8,7 +8,7 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     starlight({
-      title: 'mcpFortyTwo',
+      title: 'mcp42',
       description: 'Music-theory and MIDI tools for the Model Context Protocol.',
       logo: {
         src: './src/assets/mcp42-logo.svg',
@@ -20,7 +20,7 @@ export default defineConfig({
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/jackjakarta/mcp-fortytwo',
+          href: 'https://github.com/jackjakarta/mcp42',
         },
       ],
       sidebar: [
