@@ -20,24 +20,18 @@
       "Bash(pnpm build *)",
       "Bash(pnpm checks *)",
       "Bash(pnpm db:generate *)",
+      "Bash(pnpm db:migrate *)",
+      "Bash(pnpm db:seed *)",
 
-      "mcp__plugin_context7_context7__resolve-library-id",
-      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_context7_context7__*",
+      "mcp__mcp42__*",
 
       "mcp__stitch__list_projects",
       "mcp__stitch__get_project",
       "mcp__stitch__list_screens",
-      "mcp__stitch__get_screen",
-
-      "mcp__mcpFortyTwo__get-key",
-      "mcp__mcpFortyTwo__get-scale",
-      "mcp__mcpFortyTwo__get-chord",
-      "mcp__mcpFortyTwo__generate-progression-midi",
-      "mcp__mcpFortyTwo__generate-bassline-midi",
-      "mcp__mcpFortyTwo__generate-drum-pattern-midi"
-    ],
-    "deny": ["Bash(psql *)", "Bash(pnpm db:migrate *)", "Bash(pnpm db:seed *)"]
+      "mcp__stitch__get_screen"
+    ]
   },
-  "enabledMcpjsonServers": ["stitch", "mcpFortyTwo"],
+  "enabledMcpjsonServers": ["stitch", "mcp42"],
   "disabledMcpjsonServers": []
 }
