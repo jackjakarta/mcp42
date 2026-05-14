@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: Environment variables, Postgres, Docker, and the build pipeline.
+description: Environment variables, SQLite, Docker, and the build pipeline.
 ---
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
@@ -9,36 +9,35 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 - Node `v24.14.1` (`.nvmrc`)
 - `pnpm@9.15.3` — pinned via `packageManager`; npm/yarn are not supported.
-- Docker, for local Postgres.
 
 ## Environment variables
 
-Loaded via `envee -f .env --` in every dev and start script.
+Loaded via `envee -f .env --` in every dev and start script. Nothing is required — the defaults give you a working server.
 
-| Variable       | Required | Default | Description                                                       |
-| -------------- | :------: | ------- | ----------------------------------------------------------------- |
-| `DATABASE_URL` |    ✓     | —       | Postgres connection string. Used by both Drizzle and the runtime. |
-| `PORT`         |          | `3000`  | Port the Hono server listens on.                                  |
+| Variable      | Required | Default           | Description                                                         |
+| ------------- | :------: | ----------------- | ------------------------------------------------------------------- |
+| `SQLITE_PATH` |          | `./data/music.db` | Path to the SQLite database file. Parent directory is auto-created. |
+| `PORT`        |          | `3000`            | Port the Hono server listens on.                                    |
 
-A working local value matching the bundled `docker-compose.yml`:
+If you want a `.env` anyway:
 
 ```bash title=".env"
-DATABASE_URL=postgres://postgres:h4yuasd6@localhost:5432/local-nextjs
 PORT=3000
+# SQLITE_PATH=./data/music.db   # optional override
 ```
 
-## Local Postgres
+## Local database
 
-```bash
-docker-compose up -d
-```
+mcpFortyTwo uses an embedded SQLite database via `better-sqlite3` — no separate service to run. The file is created automatically on first connection at `SQLITE_PATH` (default `./data/music.db`).
 
-Starts a single `postgres` service on `:5432` with database `local-nextjs` and credentials `postgres` / `h4yuasd6`. Then run the migrations:
+Apply the schema and, optionally, the curated knowledge graph:
 
 ```bash
 pnpm db:migrate
-pnpm db:seed   # optional — loads the curated music knowledge graph
+pnpm db:seed   # optional — loads progressions, modes, voicings, cadences
 ```
+
+The `search-*` and `list-*` tools return empty results until you've run `db:seed`.
 
 ## Scripts
 
@@ -53,6 +52,9 @@ pnpm db:seed   # optional — loads the curated music knowledge graph
 | `pnpm test` / `pnpm test:watch`     | Vitest.                                                   |
 | `pnpm format` / `pnpm format:check` | Prettier.                                                 |
 | `pnpm checks`                       | `format:check` + `lint` + `types` + `test` (matches CI).  |
+| `pnpm db:generate`                  | `drizzle-kit generate` — emit SQL migrations from schema. |
+| `pnpm db:migrate`                   | Apply pending migrations to the SQLite database.          |
+| `pnpm db:seed`                      | Load the curated music knowledge graph.                   |
 | `pnpm docs:gen`                     | Regenerate the per-tool MDX reference from Zod schemas.   |
 | `pnpm docs:dev`                     | Run the Starlight dev server for these docs.              |
 | `pnpm docs:build`                   | Build the docs into `public/docs/`.                       |
@@ -61,10 +63,12 @@ pnpm db:seed   # optional — loads the curated music knowledge graph
 
 ```bash
 docker build -t mcp-forty-two .
-docker run --rm -p 3000:3000 -e DATABASE_URL=... mcp-forty-two
+docker run --rm -p 3000:3000 mcp-forty-two
 ```
 
 The multi-stage build on `node:24.14.1-alpine` produces a single image that serves the landing page at `/`, the docs at `/docs/`, the MCP transport at `/mcp` and a health probe at `/health`. Runs as non-root user `nodejs`.
+
+The image runs `pnpm db:migrate && pnpm db:seed` at build time, so the SQLite DB is baked in at `/app/data/music.db` and the container is ready to serve as soon as it starts — no init step. Mount a volume at `/app/data` if you want writes to persist across container restarts.
 
 <Aside>
   The docs you're reading right now are built during `pnpm build` and shipped inside the same image, so a single deployment serves the API and the docs together.
