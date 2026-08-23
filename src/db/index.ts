@@ -11,6 +11,8 @@ type DrizzleDb = BetterSQLite3Database<Schema>;
 
 const DB_PATH = process.env.SQLITE_PATH ?? './data/music.db';
 
+// Memoized on globalThis so `tsx watch` reloads reuse the open handle rather
+// than opening a second one per module instance.
 const globalForDb = globalThis as unknown as {
   sqlite?: Database.Database;
   db?: DrizzleDb;
@@ -25,10 +27,7 @@ function getSqlite(): Database.Database {
   const sqlite = new Database(DB_PATH);
   sqlite.pragma('journal_mode = WAL');
   sqlite.pragma('foreign_keys = ON');
-
-  if (process.env.NODE_ENV === 'development') {
-    globalForDb.sqlite = sqlite;
-  }
+  globalForDb.sqlite = sqlite;
 
   return sqlite;
 }
@@ -39,10 +38,7 @@ function getDb(): DrizzleDb {
   }
 
   const instance = drizzle({ client: getSqlite(), schema, casing: 'snake_case' });
-
-  if (process.env.NODE_ENV === 'development') {
-    globalForDb.db = instance;
-  }
+  globalForDb.db = instance;
 
   return instance;
 }
