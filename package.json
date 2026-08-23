@@ -11,6 +11,7 @@
     "db:generate": "drizzle-kit generate --config=./src/db/drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config=./src/db/drizzle.config.ts",
     "db:seed": "tsx src/db/seed/music.ts",
+    "db:snapshot": "tsx scripts/prepare-sqlite.ts",
     "dev": "envee -f .env -- tsx watch src/index.ts",
     "docs:build": "pnpm docs:gen && pnpm --dir docs-src install --frozen-lockfile && pnpm --dir docs-src build",
     "docs:dev": "pnpm docs:gen && pnpm --dir docs-src dev",
@@ -22,7 +23,8 @@
     "start:prod": "envee -f .env -- node dist/index.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "types": "tsc --noEmit"
+    "types": "tsc --noEmit && tsc -p api --noEmit",
+    "vercel-build": "pnpm docs:build && pnpm db:migrate && pnpm db:seed && pnpm db:snapshot"
   },
   "dependencies": {
     "@better-fetch/fetch": "1.1.21",
