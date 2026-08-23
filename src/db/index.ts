@@ -14,9 +14,13 @@ const DB_PATH = process.env.SQLITE_PATH ?? './data/music.db';
 // Serverless filesystems are read-only outside /tmp, so WAL mode can't create
 // the `-wal`/`-shm` sidecars it needs next to the file. The knowledge graph is
 // never written at runtime, so open the snapshot built by `pnpm db:snapshot`
-// read-only instead. VERCEL is set by the platform; SQLITE_READONLY is the
-// escape hatch for any other read-only host.
-const READ_ONLY = process.env.SQLITE_READONLY === '1' || process.env.VERCEL === '1';
+// read-only instead. VERCEL is set by the platform, so it's the default signal;
+// SQLITE_READONLY overrides it in both directions — `1` for any other read-only
+// host, `0` for the Vercel *build*, where `pnpm db:seed` still has to write.
+const READ_ONLY =
+  process.env.SQLITE_READONLY !== undefined
+    ? process.env.SQLITE_READONLY === '1'
+    : process.env.VERCEL === '1';
 
 // Memoized on globalThis so `tsx watch` reloads reuse the open handle rather
 // than opening a second one per module instance.

@@ -24,7 +24,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "types": "tsc --noEmit && tsc -p api --noEmit",
-    "vercel-build": "pnpm docs:build && pnpm db:migrate && pnpm db:seed && pnpm db:snapshot"
+    "vercel-build": "pnpm docs:build && pnpm db:migrate && SQLITE_READONLY=0 pnpm db:seed && pnpm db:snapshot"
   },
   "dependencies": {
     "@better-fetch/fetch": "1.1.21",
