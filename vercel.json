@@ -3,9 +3,22 @@
   "buildCommand": "pnpm vercel-build",
   "outputDirectory": "public",
   "rewrites": [
-    { "source": "/mcp", "destination": "/api/mcp" },
-    { "source": "/health", "destination": "/api/health" },
-    { "source": "/llms.txt", "destination": "/api/llms-txt" }
+    {
+      "source": "/mcp",
+      "destination": "/api/mcp"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/health"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "/api/llms-txt"
+    },
+    {
+      "source": "/.well-known/:path*",
+      "destination": "/api/well-known"
+    }
   ],
   "functions": {
     "api/**": {
